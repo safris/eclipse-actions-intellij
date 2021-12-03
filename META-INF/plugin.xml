@@ -14,7 +14,7 @@
   You should have received a copy of The MIT License (MIT) along with this
   program. If not, see <http://opensource.org/licenses/MIT/>.
 -->
-<idea-plugin url="http://plugins.jetbrains.com/plugin/10635-quick-find-plugin">
+<idea-plugin url="https://plugins.jetbrains.com/plugin/10635-quick-find-plugin">
   <id>Quick Find Plugin</id>
   <name>Quick Find</name>
   <description>
@@ -25,10 +25,10 @@
     <br/>
     Ensure that these shortcuts are not mapped to other actions in the Keymap settings.
     <br/>
-    Source available at <a href="http://github.com/safris/quick-find-plugin">http://github.com/safris/quick-find-plugin</a>.
+    Source available at <a href="https://github.com/safris/quick-find-plugin">https://github.com/safris/quick-find-plugin</a>.
     ]]>
   </description>
-  <version>1.1.0</version>
+  <version>2.0.0</version>
   <vendor>Seva Safris</vendor>
   <category>Navigation</category>
   <idea-version since-build="172"/>
@@ -44,10 +44,10 @@
   </project-components>
 
   <actions>
-    <action id="QuickFindNextAction" class="org.safris.intellij.plugin.quickfind.QuickFindNextAction" text="Quick Find Next">
+    <action id="org.safris.intellij.plugin.quickfind.QuickFindNextAction" class="org.safris.intellij.plugin.quickfind.QuickFindNextAction" text="Quick Find Next">
       <keyboard-shortcut keymap="$default" first-keystroke="alt G"/>
     </action>
-    <action id="QuickFindPreviousAction" class="org.safris.intellij.plugin.quickfind.QuickFindPreviousAction" text="Quick Find Previous">
+    <action id="org.safris.intellij.plugin.quickfind.QuickFindPreviousAction" class="org.safris.intellij.plugin.quickfind.QuickFindPreviousAction" text="Quick Find Previous">
       <keyboard-shortcut keymap="$default" first-keystroke="shift alt G"/>
     </action>
   </actions>
@@ -59,6 +59,16 @@
   <change-notes>
     <![CDATA[
     <ul>
+      <li>2.0.0
+        <ol>
+          <li>Use custom search, thus not relying on IntelliJ's SearchResults.</li>
+          <li>Properly quash annoying "not found" tooltip.</li>
+          <li>Properly handle case sensitive/insensitive, whole word, and regex searches.</li>
+          <li>Properly handle document change events.</li>
+          <li>Best case search is O(n) = 1, for sequential traversal.</li>
+          <li>Worst case search is O(n) = log2(n), for binary closest search.</li>
+        </ol>
+      </li>
       <li>1.1.0
         <ol>
           <li>Find using prior search string if selection is unset.</li>

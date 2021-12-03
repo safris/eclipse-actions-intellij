@@ -16,10 +16,35 @@
 
 package org.safris.intellij.plugin.quickfind;
 
-import com.intellij.openapi.actionSystem.IdeActions;
+import java.util.List;
+
+import com.intellij.find.FindResult;
 
 public class QuickFindPreviousAction extends QuickFindAction {
-  public QuickFindPreviousAction() {
-    super(IdeActions.ACTION_FIND_PREVIOUS);
+  private static int binaryClosestSearch(final List<FindResult> a, int from, int to, final int cursorOffset) {
+    for (int mid; from < to;) {
+      mid = (from + to) / 2;
+      final int comparison = Integer.compare(cursorOffset, a.get(mid).getEndOffset());
+      if (comparison < 0)
+        to = mid;
+      else if (comparison > 0)
+        from = mid + 1;
+      else
+        return mid;
+    }
+
+    return (from + to) / 2;
+  }
+
+  @Override
+  int getNextPrevious(final int cursorOffset) {
+    final int size = findResults.size();
+    final int index = binaryClosestSearch(findResults, 0, size, cursorOffset) - 1;
+    return index < 0 || index >= size ? size - 1 : index;
+  }
+
+  @Override
+  boolean isForward() {
+    return false;
   }
 }
