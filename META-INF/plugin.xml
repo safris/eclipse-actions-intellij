@@ -14,24 +14,60 @@
   You should have received a copy of The MIT License (MIT) along with this
   program. If not, see <http://opensource.org/licenses/MIT/>.
 -->
-<idea-plugin url="https://plugins.jetbrains.com/plugin/10635-quick-find-plugin">
-  <id>Quick Find Plugin</id>
-  <name>Quick Find</name>
+<idea-plugin>
+  <id>org.safris.intellij.eclipse_actions</id>
+  <name>Eclipse Actions</name>
   <description>
     <![CDATA[
-    A one-keystroke way to navigate to the next/previous occurrence of selected text (just like in Eclipse).
+    <ol>
+      <li>
+        <ins>Quick Find Next</ins> and <ins>Quick Find Previous</ins><br/>
+        <br/>
+        A one-keystroke way to navigate to the next/previous occurrence of selected text (just like in Eclipse).<br/>
+        <br/>
+        Same as IntelliJ's default <ins>Find Next Occurrence</ins> and <ins>Find Previous Occurrence</ins>, but also:
+        <ol>
+          <li><b>Slurps the selected text</b> as the string to find, like in Eclipse.</li>
+          <li><b>Does away with the annoying "Not found" tooltip</b>, like in Eclipse.</li>
+        </ol>
+        <br/>
+      </li>
+      <li>
+        <ins>Select Next Error</ins> and <ins>Select Previous Error</ins><br/>
+        <br/>
+        Same as IntelliJ's default <ins>Goto Next Error</ins> and <ins>Goto Previous Error</ins>, but also:<br/>
+        <ol>
+          <li><b>Selects the error</b>, like in Eclipse.</li>
+        </ol>
+        <br/>
+      </li>
+      <li>
+        <ins>Select Super Method</ins><br/>
+        <br/>
+        Same as IntelliJ's default <ins>Go to Super Method</ins>, but also:<br/>
+        <ol>
+          <li><b>Selects the method identifier</b>, like in Eclipse.</li>
+        </ol>
+        <br/>
+      </li>
+      <li><ins>Select Declaration</ins><br/>
+        <br/>
+        Same as IntelliJ's default <ins>Go to Declaration or Usages</ins>, but also:
+        <ol>
+          <li><b>Selects the method identifier</b>, like in Eclipse.</li>
+        </ol>
+        <br/>
+      </li>
+    </ol>
+    When assigning your keys or mouse shortcuts, ensure that shortcuts are not mapped to other actions in the Keymap settings.<br/>
     <br/>
-    Use Alt+G and Shift+Alt+G (or assign your own shortcuts in the Keymap settings) to navigate to each next and previous occurrence of the selected text.
-    <br/>
-    Ensure that these shortcuts are not mapped to other actions in the Keymap settings.
-    <br/>
-    Source available at <a href="https://github.com/safris/quick-find-plugin">https://github.com/safris/quick-find-plugin</a>.
+    Source available at <a href="https://github.com/safris/eclipse-actions-intellij">https://github.com/safris/eclipse-actions-intellij</a>.
     ]]>
   </description>
   <version>2.0.0</version>
   <vendor>Seva Safris</vendor>
   <category>Navigation</category>
-  <idea-version since-build="172"/>
+  <idea-version since-build="202.6397.94"/>
 
   <depends>com.intellij.modules.lang</depends>
 
@@ -44,12 +80,18 @@
   </project-components>
 
   <actions>
-    <action id="org.safris.intellij.plugin.quickfind.QuickFindNextAction" class="org.safris.intellij.plugin.quickfind.QuickFindNextAction" text="Quick Find Next">
+    <action id="org.safris.intellij.eclipse_actions.QuickFindNextAction" class="org.safris.intellij.eclipse_actions.QuickFindNextAction" text="Quick Find Next">
       <keyboard-shortcut keymap="$default" first-keystroke="alt G"/>
     </action>
-    <action id="org.safris.intellij.plugin.quickfind.QuickFindPreviousAction" class="org.safris.intellij.plugin.quickfind.QuickFindPreviousAction" text="Quick Find Previous">
+    <action id="org.safris.intellij.eclipse_actions.QuickFindPreviousAction" class="org.safris.intellij.eclipse_actions.QuickFindPreviousAction" text="Quick Find Previous">
       <keyboard-shortcut keymap="$default" first-keystroke="shift alt G"/>
     </action>
+    <action id="org.safris.intellij.eclipse_actions.SelectNextErrorAction" class="org.safris.intellij.eclipse_actions.SelectNextErrorAction" text="Select Next Error">
+    </action>
+    <action id="org.safris.intellij.eclipse_actions.SelectPreviousErrorAction" class="org.safris.intellij.eclipse_actions.SelectPreviousErrorAction" text="Select Previous Error">
+    </action>
+    <action id="org.safris.intellij.eclipse_actions.SelectSuperAction" class="org.safris.intellij.eclipse_actions.SelectSuperAction" text="Select Super Method"/>
+    <action id="org.safris.intellij.eclipse_actions.SelectDeclarationAction" class="org.safris.intellij.eclipse_actions.SelectDeclarationAction" text="Select Declaration"/>
   </actions>
 
   <extensions defaultExtensionNs="com.intellij">

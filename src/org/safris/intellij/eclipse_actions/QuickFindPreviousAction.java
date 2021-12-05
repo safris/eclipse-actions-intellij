@@ -14,17 +14,17 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.intellij.plugin.quickfind;
+package org.safris.intellij.eclipse_actions;
 
 import java.util.List;
 
 import com.intellij.find.FindResult;
 
-public class QuickFindNextAction extends QuickFindAction {
+public class QuickFindPreviousAction extends QuickFindAction {
   private static int binaryClosestSearch(final List<FindResult> a, int from, int to, final int cursorOffset) {
     for (int mid; from < to;) {
       mid = (from + to) / 2;
-      final int comparison = Integer.compare(cursorOffset, a.get(mid).getStartOffset());
+      final int comparison = Integer.compare(cursorOffset, a.get(mid).getEndOffset());
       if (comparison < 0)
         to = mid;
       else if (comparison > 0)
@@ -39,12 +39,12 @@ public class QuickFindNextAction extends QuickFindAction {
   @Override
   int getNextPrevious(final int cursorOffset) {
     final int size = findResults.size();
-    final int index = binaryClosestSearch(findResults, 0, size, cursorOffset);
-    return index >= size || index < 0 ? 0 : index;
+    final int index = binaryClosestSearch(findResults, 0, size, cursorOffset) - 1;
+    return index < 0 || index >= size ? size - 1 : index;
   }
 
   @Override
   boolean isForward() {
-    return true;
+    return false;
   }
 }

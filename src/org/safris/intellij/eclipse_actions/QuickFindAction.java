@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.intellij.plugin.quickfind;
+package org.safris.intellij.eclipse_actions;
 
 import java.awt.KeyboardFocusManager;
 import java.lang.reflect.Field;
@@ -31,13 +31,13 @@ import com.intellij.find.impl.FindResultImpl;
 import com.intellij.find.impl.livePreview.SearchResults;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 
@@ -66,9 +66,11 @@ abstract class QuickFindAction extends AnAction {
 
   @Override
   public void actionPerformed(final AnActionEvent e) {
-    final Editor editor = e.getData(PlatformDataKeys.EDITOR_EVEN_IF_INACTIVE);
-    if (editor == null)
+    final Project project = e.getProject();
+    if (project == null)
       return;
+
+    final Editor editor = FileEditorManager.getInstance(project).getSelectedTextEditor();
 
     if (lastDocument != editor.getDocument()) {
       if (lastDocument != null)
@@ -78,10 +80,6 @@ abstract class QuickFindAction extends AnAction {
       lastDocument.addDocumentListener(documentListener);
       isDocumentChanged = true;
     }
-
-    final Project project = e.getProject();
-    if (project == null)
-      return;
 
     FindManager findManager = null;
     EditorSearchSession session = EditorSearchSession.get(editor);
@@ -302,7 +300,7 @@ abstract class QuickFindAction extends AnAction {
       session.searchBackward();
   }
 
-  private static void invokeAction(final AnActionEvent e, final String navigationActionId) {
+  static void invokeAction(final AnActionEvent e, final String navigationActionId) {
     e.getActionManager().getAction(navigationActionId).actionPerformed(e);
   }
 }
